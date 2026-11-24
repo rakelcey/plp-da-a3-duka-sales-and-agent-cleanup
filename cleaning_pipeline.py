@@ -30,10 +30,8 @@ def clean_agent_data(
       .fillna(overall_median)
   )
 
-  # 4. Parse txn_date into datetime64[ns]
-  df["txn_date"] = pd.to_datetime(
-      df["txn_date"], format="mixed", errors="coerce"
-  )
+  # 4. Parse txn_date cleanly without format="mixed"
+  df["txn_date"] = pd.to_datetime(df["txn_date"], errors="coerce")
 
   # 5. Flag outliers using 1.5 * IQR
   q1 = float(df["amount"].quantile(0.25))
